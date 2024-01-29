@@ -1,6 +1,6 @@
 {
   "name": "wx-editor-vue3",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "富文本编辑器",
   "main": "/src/index.js",
   "scripts": {
@@ -12,6 +12,7 @@
   },
   "author": "momo",
   "license": "MIT",
+  "Keywords":["editor"],
   "bugs": {
     "url": "https://github.com/MomoYTKS/wx-editor-vue3/issues"
   },
