@@ -1523,9 +1523,11 @@ document.addEventListener("keydown", function (event) {
 </script>
 <style scoped lang='scss'>
 .flexBox {
-	height: 97vh;
+	// height: 97vh;
+	height: 100%;
 	overflow: hidden;
 	.editor-content {
+		overflow: auto;
 		background-color: #fff;
 	}
 	.Image-recycling {
@@ -1584,7 +1586,8 @@ document.addEventListener("keydown", function (event) {
 #content {
 	padding: 0 50px;
 	overflow-y: auto;
-	height: 90vh;
+	// height: 90vh;
+	height: 100%;
 	outline: none;
 	.EditorImgHover {
 		cursor: move;
