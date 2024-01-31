@@ -409,9 +409,9 @@ const handleSelection = (event) => {
 	// console.log(ToolbarNode);
 	toolBarStyle.value.toolBarPositionTop = event.clientY - 160;
 	toolBarStyle.value.toolBarPositionLeft = event.clientX - 367;
-	if (toolBarStyle.value.toolBarPositionLeft + 367 > editorContent.value.offsetWidth) {
+	if (toolBarStyle.value.toolBarPositionLeft + 367 + 200 > editorContent.value.offsetWidth) {
 		toolBarStyle.value.toolBarPositionLeft =
-			toolBarStyle.value.toolBarPositionLeft + (editorContent.value.offsetWidth - toolBarStyle.value.toolBarPositionLeft - 367);
+			toolBarStyle.value.toolBarPositionLeft + (editorContent.value.offsetWidth - toolBarStyle.value.toolBarPositionLeft - 367) - 140;
 	}
 	if (toolBarStyle.value.toolBarPositionLeft <= 0) {
 		toolBarStyle.value.toolBarPositionLeft = 0;

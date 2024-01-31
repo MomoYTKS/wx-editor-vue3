@@ -1,2 +1,2 @@
-import Editor from "./Editor";
+import Editor from "./Editor/index.vue";
 export default Editor;
