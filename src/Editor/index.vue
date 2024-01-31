@@ -88,7 +88,7 @@
 					class="toolBar"
 					ref="ToolbarNode"
 					:style="{
-						position: 'absolute',
+						position: 'fixed',
 						zIndex: '100',
 						userSelect: 'none',
 						display: toolBarStyle.toolBarShowHide,
@@ -308,15 +308,23 @@ const props = defineProps({
 		default: "300px",
 	},
 	textSize: {
+		// 默认字体大小
 		type: String,
 		default: "18px",
 	},
 	RecycleBinImageData: {
+		// 图片回收站
 		type: Array,
 	},
 	fontLibrary: {
+		// 修改字体样式
 		type: Array,
 		required: true,
+	},
+	ToolBarMarginLeft: {
+		// 悬浮工具栏距离首屏左侧的位置
+		type: Number,
+		default: 0,
 	},
 });
 
@@ -407,15 +415,32 @@ const handleSelection = (event) => {
 		.filter((item) => item !== "");
 	// const range = selection.getRangeAt(0);
 	// console.log(ToolbarNode);
-	toolBarStyle.value.toolBarPositionTop = event.clientY - 160;
+	// console.log(event, "eventttt");
+	// console.log(event.clientY, "---", event.layerY, "---", event.movementY, "---", event.offsetY, "---", event.pageY, "---", event.screenY, "---", event.y);
+	// toolBarStyle.value.toolBarPositionTop = event.clientY - 160;
+	// --------------------绝对定位的值--------------------
+	// toolBarStyle.value.toolBarPositionTop = event.clientY - 60;
+	// toolBarStyle.value.toolBarPositionLeft = event.clientX - 367;
+	// if (toolBarStyle.value.toolBarPositionLeft + 367 + 200 > editorContent.value.offsetWidth) {
+	// 	toolBarStyle.value.toolBarPositionLeft =
+	// 		toolBarStyle.value.toolBarPositionLeft + (editorContent.value.offsetWidth - toolBarStyle.value.toolBarPositionLeft - 367) - 140;
+	// }
+	// if (toolBarStyle.value.toolBarPositionLeft <= 0) {
+	// 	toolBarStyle.value.toolBarPositionLeft = 0;
+	// }
+	// --------------------绝对定位的值--------------------
+	// --------------------固定定位的值--------------------
+	toolBarStyle.value.toolBarPositionTop = event.clientY - 60;
 	toolBarStyle.value.toolBarPositionLeft = event.clientX - 367;
 	if (toolBarStyle.value.toolBarPositionLeft + 367 + 200 > editorContent.value.offsetWidth) {
 		toolBarStyle.value.toolBarPositionLeft =
-			toolBarStyle.value.toolBarPositionLeft + (editorContent.value.offsetWidth - toolBarStyle.value.toolBarPositionLeft - 367) - 140;
+			toolBarStyle.value.toolBarPositionLeft + (editorContent.value.offsetWidth - toolBarStyle.value.toolBarPositionLeft - 367) + 80;
 	}
-	if (toolBarStyle.value.toolBarPositionLeft <= 0) {
-		toolBarStyle.value.toolBarPositionLeft = 0;
+	if (toolBarStyle.value.toolBarPositionLeft <= props.ToolBarMarginLeft) {
+		toolBarStyle.value.toolBarPositionLeft = props.ToolBarMarginLeft;
 	}
+	// console.log(toolBarStyle.value.toolBarPositionLeft);
+	// --------------------固定定位的值--------------------
 	// console.log("Top：", toolBarStyle.value.toolBarPositionTop, "Left：", toolBarStyle.value.toolBarPositionLeft);
 	// console.log(filterArr.value, "filterArr");
 	if (filterArr.value.length > 1) {
@@ -1322,34 +1347,37 @@ const handleDragOver = (event) => {
 		// console.log("222", event);
 		// console.log(editorContent);
 		if ((event.target.tagName === "P" && textAndImg.value) || (event.target.tagName === "H1" && textAndImg.value)) {
-			// console.log(event.target.getBoundingClientRect());
+			// console.log(event.target.offsetTop);
 			const pRect = event.target.getBoundingClientRect();
-			const topDiff = event.clientY - pRect.top;
-			const bottomDiff = pRect.bottom - event.clientY;
+			const dddp = document.querySelector(".editor-content")
+			const topDiff = event.clientY - pRect.top + dddp.scrollTop;
+			// const topDiff = event.target.offsetTop;
+			const bottomDiff = pRect.bottom - event.clientY + dddp.scrollTop;
 			lineTopFlag.value = true;
+			// console.log(topDiff,"top",bottomDiff,"bottom");
 			if (topDiff < bottomDiff) {
 				// 鼠标位置更接近p标签的顶部
 				// console.log("顶部", Math.floor(pRect.top));
-				lineTop.value = Math.floor(pRect.top) - 91; // 86
+				lineTop.value = Math.floor(pRect.top) - 91 + dddp.scrollTop; // 86
 				TopAndBottom.value = true;
 			} else {
 				// 鼠标位置更接近p标签的底部
 				// console.log("底部", Math.floor(pRect.bottom));
-				lineTop.value = Math.floor(pRect.bottom) - 76; // 86
+				lineTop.value = Math.floor(pRect.bottom) - 76 + dddp.scrollTop; // 86
 				TopAndBottom.value = false;
 			}
 			// console.log(event.clientY, "-", event.target.clientHeight, "=", lineTop.value);
 		} else if (event.target.tagName === "SPAN") {
 			// console.log(event,"spansss");
 			const pRect = event.target.parentElement.getBoundingClientRect();
-			const topDiff = event.clientY - pRect.top;
-			const bottomDiff = pRect.bottom - event.clientY;
+			const topDiff = event.clientY - pRect.top + dddp.scrollTop;
+			const bottomDiff = pRect.bottom - event.clientY + dddp.scrollTop;
 			lineTopFlag.value = true;
 			if (topDiff < bottomDiff) {
-				lineTop.value = Math.floor(pRect.top) - 86;
+				lineTop.value = Math.floor(pRect.top) - 91 + dddp.scrollTop;
 				TopAndBottom.value = true;
 			} else {
-				lineTop.value = Math.floor(pRect.bottom) - 86;
+				lineTop.value = Math.floor(pRect.bottom) - 76 + dddp.scrollTop;
 				TopAndBottom.value = false;
 			}
 		} else {

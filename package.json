@@ -1,6 +1,6 @@
 {
   "name": "wx-editor-vue3",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "简易富文本编辑器",
   "main": "/src/index.js",
   "scripts": {

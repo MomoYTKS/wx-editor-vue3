@@ -23,6 +23,7 @@ import Editor from "wx-editor-vue3"
 			:textSize="'16px'"
 			:RecycleBinImageData="RecycleBinImageDataA"
 			:fontLibrary="fontArr"
+			:ToolBarMarginLeft="ToolBarMarginLeftX"
 		></Editor>
 	</div>
 </template>
@@ -30,6 +31,9 @@ import Editor from "wx-editor-vue3"
 
 ```javascript
 <script setup>
+import Editor from "wx-editor-vue3"
+
+const ToolBarMarginLeftX = ref(200);
 const EditorRef = ref(null);
 const Node = ref(null);
 
@@ -114,15 +118,23 @@ const props = defineProps({
 		default: "300px",
 	},
 	textSize: {
+		// 默认字体大小
 		type: String,
 		default: "18px",
 	},
 	RecycleBinImageData: {
+		// 图片回收站
 		type: Array,
 	},
 	fontLibrary: {
+		// 修改字体样式
 		type: Array,
 		required: true,
+	},
+	ToolBarMarginLeft: {
+		// 悬浮工具栏距离首屏左侧的位置
+		type: Number,
+		default: 0,
 	},
 });
 </script>
